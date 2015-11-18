@@ -42,9 +42,19 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	let add = __webpack_require__(1);
+	
+	module.exports = {
+	  add
+	};
+
+/***/ },
+/* 1 */
 /***/ function(module, exports) {
 
-
+	module.exports = 4;
 
 /***/ }
 /******/ ]);

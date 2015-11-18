@@ -1,7 +1,8 @@
 let expect = require('chai').expect;
+let add = require('../source-build/index');
 
 describe('Add', ()=>{
   it('works', () =>{
-    expect('it').to.eq('it');
+    expect(add.add).to.eq(5);
   });
 });

@@ -5,12 +5,14 @@ var gutil = require('gutil');
 var webpack = require('webpack');
 
 var dirs = {
-  testBuild : 'test-build'
+  testBuild : 'test-build',
+  sourceBuild : 'source-build'
 };
 
 var files = {
   test : 'test/*.js',
-  testBuild : dirs.testBuild + '/*.js'
+  testBuild : dirs.testBuild + '/*.js',
+  source: 'source/**/*.js'
 };
 
 //Test tasks
@@ -23,7 +25,7 @@ gulp.task('test:build', function () {
         .pipe(gulp.dest(dirs.testBuild));
 });
 
-gulp.task('test', ['webpack', 'test:build'], function(){
+gulp.task('test', ['source:build', 'test:build'], function(){
   return gulp.src(files.testBuild, {read: false})
       .pipe(mocha());
 });
@@ -42,8 +44,16 @@ gulp.task('webpack', function (callback) {
   });
 });
 
-gulp.task('watch', function() {
-    gulp.watch(files.test, ['test']);
+gulp.task('source:build', function () {
+    return gulp.src(files.source)
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest(dirs.sourceBuild));
 });
 
-gulp.task('default', ['webpack', 'test', 'watch' ]);
+gulp.task('watch', function() {
+    gulp.watch([files.test, files.source], ['test']);
+});
+
+gulp.task('default', ['source:build', 'test', 'watch' ]);

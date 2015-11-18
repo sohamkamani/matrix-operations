@@ -1,8 +1,8 @@
 let expect = require('chai').expect;
-let add = require('../source-build/index');
+let myModule = require('../source-build/index');
 
 describe('Add', ()=>{
   it('works', () =>{
-    expect(add.add).to.eq(5);
+    expect(myModule.add(2,2)).to.eq(4);
   });
 });

@@ -1,1 +1,1 @@
-module.exports = 5;
+module.exports = (n1, n2) => n1 + n2;

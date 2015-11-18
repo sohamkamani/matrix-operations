@@ -1,10 +1,10 @@
 'use strict';
 
 var expect = require('chai').expect;
-var add = require('../source-build/index');
+var myModule = require('../source-build/index');
 
 describe('Add', function () {
   it('works', function () {
-    expect(add.add).to.eq(5);
+    expect(myModule.add(2, 2)).to.eq(4);
   });
 });

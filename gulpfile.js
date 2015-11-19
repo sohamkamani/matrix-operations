@@ -11,8 +11,8 @@ var dirs = {
 };
 
 var files = {
-  test: 'test/*.js',
-  testBuild: dirs.testBuild + '/*.js',
+  test: 'test/**/*.js',
+  testBuild: dirs.testBuild + '/**/*.js',
   source: dirs.source + '/**/*.js',
   sourceBuild : dirs.sourceBuild + '/**/*.js',
   entryPoint: dirs.sourceBuild + '/index.js'

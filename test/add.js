@@ -1,6 +1,8 @@
 'use strict';
-let expect = require('chai').expect;
-let myModule = require('../source-build/index');
+import chai from 'chai';
+import myModule from '../source-build/index';
+
+let expect = chai.expect;
 
 describe('Add', ()=>{
   it('works', () =>{

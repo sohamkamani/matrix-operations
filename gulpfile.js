@@ -1,7 +1,8 @@
+'use strict';
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var babel = require('gulp-babel');
-var gutil = require('gutil');
+var clean = require('gulp-clean');
 
 var dirs = {
   testBuild: 'test-build',
@@ -19,39 +20,41 @@ var files = {
 };
 
 //Test tasks
+gulp.task('source:build', function () {
+  return gulp.src(files.source)
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('build/source'));
+});
 
 gulp.task('test:build', function () {
   return gulp.src(files.test)
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(gulp.dest(dirs.testBuild));
+    .pipe(gulp.dest('build/test'));
 });
 
-gulp.task('test', ['source:build', 'test:build'], function () {
-  return gulp.src(files.testBuild, {
+gulp.task('build:all',['source:build', 'test:build']);
+
+
+gulp.task('test', ['build:all'], function () {
+  return gulp.src('build/test/**/*.js', {
       read: false
     })
     .pipe(mocha());
 });
 
-//Source file transformation tasks
-gulp.task('source:build', function () {
-  return gulp.src(files.source)
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(gulp.dest(dirs.sourceBuild));
-});
-
-gulp.task('copy:build', ['source:build'], function () {
-  return gulp.src(files.sourceBuild)
-    .pipe(gulp.dest(dirs.dist));
+gulp.task('clean:all', function(){
+  return gulp.src('build/**/*', {read: false})
+    .pipe(clean());
 });
 
 gulp.task('watch', function () {
   gulp.watch([files.test, files.source], ['test']);
 });
 
-gulp.task('default', ['source:build', 'test', 'watch']);
-gulp.task('build', ['source:build', 'copy:build']);
+gulp.task('default', ['clean:all'], function(){
+  return gulp.start.apply(this, ['test','watch']);
+});

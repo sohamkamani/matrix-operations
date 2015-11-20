@@ -1,6 +1,6 @@
 'use strict';
 
-import isMatrix from '../../source-build/validations/isMatrix';
+import isMatrix from '../../source/validations/isMatrix';
 let expect = require('chai').expect;
 
 describe('isMatrix', function(){
@@ -17,7 +17,7 @@ describe('isMatrix', function(){
   ];
   let array1d = [1,2,3];
   let invalidCharMatrix = [
-    [1,2,'s'],
+    [1,2,'a'],
     [3,4,5],
     [6,7,8]
   ];

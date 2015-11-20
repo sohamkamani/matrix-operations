@@ -1,6 +1,6 @@
 'use strict';
 import chai from 'chai';
-import myModule from '../source-build/index';
+import myModule from '../source/index';
 
 let expect = chai.expect;
 

@@ -47,7 +47,7 @@ gulp.task('test', ['build:all'], function () {
 });
 
 gulp.task('clean:all', function(){
-  return gulp.src('build/**/*', {read: false})
+  return gulp.src('build', {read: false})
     .pipe(clean());
 });
 

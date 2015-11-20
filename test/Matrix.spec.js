@@ -18,4 +18,34 @@ describe('Matrix', function(){
     assert.deepEqual(Matrix(mat2x2).dimensions, {m: 2, n: 2});
     assert.deepEqual(Matrix(mat2x1).dimensions, {m: 2, n: 1});
   });
+
+  it('should add another matrix', ()=>{
+    let mat1 = Matrix([[1],[1]]);
+    let mat2 = Matrix([[1],[1]]);
+    assert.deepEqual(mat1.add(mat2).value(),[[2],[2]]);
+  });
+
+  it('should subtract another matrix', ()=>{
+    let mat1 = Matrix([[1],[1]]);
+    let mat2 = Matrix([[1],[1]]);
+    assert.deepEqual(mat1.subtract(mat2).value(),[[0],[0]]);
+  });
+
+  it('should dot multiply another matrix', ()=>{
+    let mat1 = Matrix([[1],[1]]);
+    let mat2 = Matrix([[1],[1]]);
+    assert.deepEqual(mat1.multiply(mat2).value(),[[1],[1]]);
+  });
+
+  it('should dot divide another matrix', ()=>{
+    let mat1 = Matrix([[1],[1]]);
+    let mat2 = Matrix([[1],[1]]);
+    assert.deepEqual(mat1.divide(mat2).value(),[[1],[1]]);
+  });
+
+  it('should throw error while adding matrix of wrong dimensions', ()=>{
+    let mat1 = Matrix([[1],[1]]);
+    let mat2 = Matrix([[1]]);
+    expect(()=> mat1.add(mat2)).to.throw(Error);
+  });
 });

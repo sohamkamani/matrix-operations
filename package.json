@@ -17,5 +17,8 @@
     "gulp-mocha": "^2.2.0",
     "gutil": "^1.6.4",
     "mocha-lcov-reporter": "^1.0.0"
+  },
+  "dependencies": {
+    "object-assign": "^4.0.1"
   }
 }

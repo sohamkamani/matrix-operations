@@ -8,7 +8,7 @@ var _isMatrix = require('./validations/isMatrix');
 
 var _isMatrix2 = _interopRequireDefault(_isMatrix);
 
-var _dotOperations = require('./lib/dotOperations');
+var _dotOperations = require('./lib/dot-operations');
 
 var _dotOperations2 = _interopRequireDefault(_dotOperations);
 

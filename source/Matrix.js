@@ -1,7 +1,7 @@
 'use strict';
 import assign from 'object-assign';
 import isMatrix from './validations/isMatrix';
-import dotOperations from './lib/dotOperations';
+import dotOperations from './lib/dot-operations';
 import canAdd from './validations/canAdd';
 
 let Matrix = function (arr) {

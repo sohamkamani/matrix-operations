@@ -6,7 +6,7 @@ from 'chai';
 import {
   add, subtract, multiply, divide
 }
-from '../../source/lib/dotOperations';
+from '../../source/lib/dot-operations';
 
 describe('dot operations', function () {
   let mat1 = [

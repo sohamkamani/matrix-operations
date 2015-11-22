@@ -34,13 +34,13 @@ describe('Matrix', function(){
   it('should dot multiply another matrix', ()=>{
     let mat1 = Matrix([[1],[1]]);
     let mat2 = Matrix([[1],[1]]);
-    assert.deepEqual(mat1.multiply(mat2).value(),[[1],[1]]);
+    assert.deepEqual(mat1.dotMultiply(mat2).value(),[[1],[1]]);
   });
 
   it('should dot divide another matrix', ()=>{
     let mat1 = Matrix([[1],[1]]);
     let mat2 = Matrix([[1],[1]]);
-    assert.deepEqual(mat1.divide(mat2).value(),[[1],[1]]);
+    assert.deepEqual(mat1.dotDivide(mat2).value(),[[1],[1]]);
   });
 
   it('should throw error while adding matrix of wrong dimensions', ()=>{

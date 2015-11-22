@@ -15,6 +15,6 @@ let dotOperation = (operation)=> function(mat1, mat2){
 module.exports = {
   add : dotOperation(add),
   subtract : dotOperation(subtract),
-  multiply : dotOperation(multiply),
-  divide : dotOperation(divide)
+  dotMultiply : dotOperation(multiply),
+  dotDivide : dotOperation(divide)
 };

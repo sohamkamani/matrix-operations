@@ -4,7 +4,7 @@ import {
 }
 from 'chai';
 import {
-  add, subtract, multiply, divide
+  add, subtract, dotMultiply, dotDivide
 }
 from '../../source/lib/dot-operations';
 
@@ -37,14 +37,14 @@ describe('dot operations', function () {
   });
 
   it('can dot multiply two matrices', () => {
-    assert.deepEqual(multiply(mat1, mat2), [
+    assert.deepEqual(dotMultiply(mat1, mat2), [
         [1, 2],
         [3, 4]
       ]);
   });
 
   it('can dot divide two matrices', () => {
-    assert.deepEqual(divide(mat1, mat2), [
+    assert.deepEqual(dotDivide(mat1, mat2), [
         [1, 2],
         [3, 4]
       ]);

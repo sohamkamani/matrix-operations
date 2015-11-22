@@ -1,4 +1,6 @@
 'use strict';
+import { install } from 'source-map-support';
+install();
 import {expect, assert} from 'chai';
 import Matrix from '../source/Matrix';
 

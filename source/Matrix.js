@@ -5,8 +5,11 @@ import dotOperations from './lib/dot-operations';
 import canAdd from './validations/canAdd';
 import isSquare from './validations/isSquare';
 import createArray from './lib/create';
+import multiply from './lib/multiply';
+import canMultiply from './validations/canMultiply';
 
 let Matrix = function (arr) {
+
   if (!isMatrix(arr)) {
     throw new Error('Array is not a matrix');
   }
@@ -22,7 +25,8 @@ let Matrix = function (arr) {
 
   let coreObject = {
     value,
-    dimensions
+    dimensions,
+    isMatrix : true
   };
 
   /*
@@ -49,9 +53,21 @@ let Matrix = function (arr) {
     });
 
   /*
+  Matrix cross operations
+  */
+  let crossOperations = {
+    multiply : function(mat2){
+      if(!canMultiply(this, mat2)){
+        throw new Error('Cannot multiply matrices : dimension mismatch');
+      }
+      let result = multiply.call(this, mat2);
+      return Matrix(result);
+    }
+  };
+  /*
   Building Matrix object from various modules
   */
-  return assign(coreObject, matrixDotOperations, validations);
+  return assign(coreObject, matrixDotOperations, validations, crossOperations);
 
 };
 

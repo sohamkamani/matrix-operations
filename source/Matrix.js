@@ -4,6 +4,7 @@ import isMatrix from './validations/isMatrix';
 import dotOperations from './lib/dot-operations';
 import canAdd from './validations/canAdd';
 import isSquare from './validations/isSquare';
+import createArray from './lib/create';
 
 let Matrix = function (arr) {
   if (!isMatrix(arr)) {
@@ -52,6 +53,23 @@ let Matrix = function (arr) {
   */
   return assign(coreObject, matrixDotOperations, validations);
 
+};
+
+/*
+  Static methods
+*/
+
+Matrix.ones = (m, n) => {
+  return Matrix(createArray({
+    m, n
+  }, 1));
+};
+
+Matrix.zeros = (m, n) => {
+  return Matrix(createArray({
+    m: m,
+    n: n
+  }, 0));
 };
 
 module.exports = Matrix;

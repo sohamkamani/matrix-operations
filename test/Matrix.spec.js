@@ -5,6 +5,9 @@ import {expect, assert} from 'chai';
 import Matrix from '../source/Matrix';
 
 describe('Matrix', function(){
+  it('should be an instance of matrix', ()=>{
+    expect(Matrix([[0]]) instanceof Matrix).to.equal(true);
+  });
 
   it('should throw an error for an invalid matrix', ()=>{
     expect(()=> Matrix(null)).to.throw(Error);

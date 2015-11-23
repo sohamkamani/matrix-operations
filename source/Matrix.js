@@ -35,6 +35,7 @@ const dotOperations = require('./lib/dot-operations');
 const isSquare = require('./validations/isSquare');
 const createArray = require('./lib/create');
 const multiply = require('./lib/multiply');
+const subMatrix = require('./lib/submatrix');
 
 /*
 Building exposed validations
@@ -47,6 +48,7 @@ let validations = {
 Matrix cross operations
 */
 let crossOperations = {
+  subMatrix,
   multiply
 };
 /*

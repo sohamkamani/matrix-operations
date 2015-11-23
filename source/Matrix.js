@@ -1,12 +1,6 @@
 'use strict';
 import assign from 'object-assign';
 import isMatrix from './validations/isMatrix';
-import dotOperations from './lib/dot-operations';
-import canAdd from './validations/canAdd';
-import isSquare from './validations/isSquare';
-import createArray from './lib/create';
-import multiply from './lib/multiply';
-import canMultiply from './validations/canMultiply';
 
 let Matrix = function (arr) {
   if(!(this instanceof Matrix)){
@@ -34,6 +28,15 @@ let Matrix = function (arr) {
   assign(this, coreObject);
 };
 
+module.exports = Matrix;
+
+
+var dotOperations = require('./lib/dot-operations');
+var isSquare = require('./validations/isSquare');
+var createArray = require('./lib/create');
+var multiply = require('./lib/multiply');
+var canMultiply = require('./validations/canMultiply');
+
 /*
 Building exposed validations
 */
@@ -44,18 +47,19 @@ let validations = {
 /*
 Building matrix dot operations
 */
-let convertDotOperation = (operation) => function (mat2) {
-  if (!canAdd(this, mat2)) {
-    throw new Error('no');
-  }
-  return Matrix(operation(this.value(), mat2.value()));
-};
-
-let matrixDotOperations = {};
-Object.keys(dotOperations)
-  .forEach((key) => {
-    matrixDotOperations[key] = convertDotOperation(dotOperations[key]);
-  });
+// let convertDotOperation = (operation) => function (mat2) {
+//   if (!canAdd(this, mat2)) {
+//     throw new Error('no');
+//   }
+//   return Matrix(operation(this.value(), mat2.value()));
+// };
+//
+// let matrixDotOperations = {};
+// Object.keys(dotOperations)
+//   .forEach((key) => {
+//     matrixDotOperations[key] = convertDotOperation(dotOperations[key]);
+//   });
+let matrixDotOperations = dotOperations;
 
 /*
 Matrix cross operations
@@ -92,5 +96,3 @@ Matrix.zeros = (m, n) => {
     n: n
   }, 0));
 };
-
-module.exports = Matrix;

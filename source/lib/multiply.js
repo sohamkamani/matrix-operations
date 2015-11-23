@@ -1,5 +1,7 @@
 'use strict';
 import createArray from './create';
+import Matrix from '../Matrix';
+import canMultiply from '../validations/canMultiply';
 
 let getMulValue = (args) => {
   let {
@@ -34,4 +36,11 @@ let multiply = function (mat2) {
   });
 };
 
-module.exports = multiply;
+
+module.exports = function (mat2) {
+  if (!canMultiply(this, mat2)) {
+    throw new Error('Cannot multiply matrices : dimension mismatch');
+  }
+  let result = multiply.call(this, mat2);
+  return Matrix(result);
+};

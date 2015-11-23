@@ -14,8 +14,8 @@ let Matrix = function (arr) {
   /*
   Building Core Matrix object
   */
-  let value = () => arr;
-  let dimensions = {
+  const value = () => arr;
+  const dimensions = {
     m: arr.length,
     n: arr[0].length
   };
@@ -31,11 +31,10 @@ let Matrix = function (arr) {
 module.exports = Matrix;
 
 
-var dotOperations = require('./lib/dot-operations');
-var isSquare = require('./validations/isSquare');
-var createArray = require('./lib/create');
-var multiply = require('./lib/multiply');
-var canMultiply = require('./validations/canMultiply');
+const dotOperations = require('./lib/dot-operations');
+const isSquare = require('./validations/isSquare');
+const createArray = require('./lib/create');
+const multiply = require('./lib/multiply');
 
 /*
 Building exposed validations
@@ -45,39 +44,15 @@ let validations = {
 };
 
 /*
-Building matrix dot operations
-*/
-// let convertDotOperation = (operation) => function (mat2) {
-//   if (!canAdd(this, mat2)) {
-//     throw new Error('no');
-//   }
-//   return Matrix(operation(this.value(), mat2.value()));
-// };
-//
-// let matrixDotOperations = {};
-// Object.keys(dotOperations)
-//   .forEach((key) => {
-//     matrixDotOperations[key] = convertDotOperation(dotOperations[key]);
-//   });
-let matrixDotOperations = dotOperations;
-
-/*
 Matrix cross operations
 */
 let crossOperations = {
-  multiply: function (mat2) {
-    if (!canMultiply(this, mat2)) {
-      throw new Error('Cannot multiply matrices : dimension mismatch');
-    }
-    let result = multiply.call(this, mat2);
-    return Matrix(result);
-  }
+  multiply
 };
 /*
 Building Matrix object from various modules
 */
-assign(Matrix.prototype, matrixDotOperations, validations, crossOperations);
-
+assign(Matrix.prototype, dotOperations, validations, crossOperations);
 
 
 /*

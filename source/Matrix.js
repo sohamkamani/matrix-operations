@@ -9,6 +9,9 @@ import multiply from './lib/multiply';
 import canMultiply from './validations/canMultiply';
 
 let Matrix = function (arr) {
+  if(!(this instanceof Matrix)){
+    return new Matrix(arr);
+  }
 
   if (!isMatrix(arr)) {
     throw new Error('Array is not a matrix');
@@ -26,50 +29,52 @@ let Matrix = function (arr) {
   let coreObject = {
     value,
     dimensions,
-    isMatrix : true
+    isMatrix: true
   };
-
-  /*
-  Building exposed validations
-  */
-  let validations = {
-    isSquare
-  };
-
-  /*
-  Building matrix dot operations
-  */
-  let convertDotOperation = (operation) => (mat2) => {
-    if (!canAdd(coreObject, mat2)) {
-      throw new Error('no');
-    }
-    return Matrix(operation(value(), mat2.value()));
-  };
-
-  let matrixDotOperations = {};
-  Object.keys(dotOperations)
-    .forEach((key) => {
-      matrixDotOperations[key] = convertDotOperation(dotOperations[key]);
-    });
-
-  /*
-  Matrix cross operations
-  */
-  let crossOperations = {
-    multiply : function(mat2){
-      if(!canMultiply(this, mat2)){
-        throw new Error('Cannot multiply matrices : dimension mismatch');
-      }
-      let result = multiply.call(this, mat2);
-      return Matrix(result);
-    }
-  };
-  /*
-  Building Matrix object from various modules
-  */
-  return assign(coreObject, matrixDotOperations, validations, crossOperations);
-
+  assign(this, coreObject);
 };
+
+/*
+Building exposed validations
+*/
+let validations = {
+  isSquare
+};
+
+/*
+Building matrix dot operations
+*/
+let convertDotOperation = (operation) => function (mat2) {
+  if (!canAdd(this, mat2)) {
+    throw new Error('no');
+  }
+  return Matrix(operation(this.value(), mat2.value()));
+};
+
+let matrixDotOperations = {};
+Object.keys(dotOperations)
+  .forEach((key) => {
+    matrixDotOperations[key] = convertDotOperation(dotOperations[key]);
+  });
+
+/*
+Matrix cross operations
+*/
+let crossOperations = {
+  multiply: function (mat2) {
+    if (!canMultiply(this, mat2)) {
+      throw new Error('Cannot multiply matrices : dimension mismatch');
+    }
+    let result = multiply.call(this, mat2);
+    return Matrix(result);
+  }
+};
+/*
+Building Matrix object from various modules
+*/
+assign(Matrix.prototype, matrixDotOperations, validations, crossOperations);
+
+
 
 /*
   Static methods

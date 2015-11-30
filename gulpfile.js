@@ -65,6 +65,14 @@ gulp.task('clean:all', function () {
     .pipe(clean());
 });
 
+gulp.task('build', function(){
+  return gulp.src(files.source)
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('watch', function () {
   gulp.watch([files.test, files.source], ['test']);
 });

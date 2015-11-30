@@ -1,5 +1,5 @@
-let add = require('./lib/add');
+import Matrix from './Matrix';
 
 module.exports = {
-  add
+  Matrix
 };

@@ -3,25 +3,24 @@ var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var babel = require('gulp-babel');
 var clean = require('gulp-clean');
-var istanbul = require('gulp-babel-istanbul');
 var sourcemaps = require('gulp-sourcemaps');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-// var istanbul = require('gulp-istanbul');
+var istanbul = require('gulp-istanbul');
+var remapIstanbulRaw = require('remap-istanbul');
 var path = require('path');
-var isparta = require('isparta');
-var mergeStream = require('merge-stream');
+require('colors');
+var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 
-require('babel-core/register');
 
 var dirs = {
   source: 'source',
   dist: 'build',
   sourceRoot: path.join(__dirname, 'source'),
   testRoot: path.join(__dirname, 'test'),
-  testBuild : 'build/test',
-  sourceBuild : 'build/source'
- };
+  testBuild: 'build/test',
+  sourceBuild: 'build/source'
+};
 
 var files = {
   test: 'test/**/*.js',
@@ -65,22 +64,43 @@ gulp.task('test:build', function () {
 gulp.task('build:all', ['source:build', 'test:build']);
 
 
-gulp.task('pre-test',['build:all'], function () {
+gulp.task('pre-test', ['build:all'], function () {
   return gulp.src([files.sourceBuild])
-    .pipe(istanbul({
-      instrumenter: isparta.Instrumenter
-    }))
+    .pipe(istanbul())
     .pipe(istanbul.hookRequire());
 });
 
-gulp.task('test', ['build:all','pre-test'], function () {
+gulp.task('test:mocha', ['build:all', 'pre-test'], function () {
   return gulp.src(files.testBuild, {
       read: false
     })
     .pipe(mocha())
-    .pipe(istanbul.writeReports());
+    .pipe(istanbul.writeReports({
+      reporters: ['json', 'text-summary']
+    }));
 });
 
+gulp.task('remap-istanbul', ['test:mocha'], function () {
+  return gulp.src('coverage/coverage-final.json')
+    .pipe(remapIstanbul({
+      reports: {
+        'json': 'coverage/coverage-final-mapped.json',
+        'html': 'coverage/lcov-report'
+      }
+    }))
+    .on('end', function () {
+      var loadCoverage = require('remap-istanbul/lib/loadCoverage');
+      var remap = require('remap-istanbul/lib/remap');
+      var writeReport = require('remap-istanbul/lib/writeReport');
+      var collector = remap(loadCoverage('coverage/coverage-final.json'));
+      writeReport(collector, 'text').then(function () {
+        /* do something else now */
+      });
+      console.log('Full coverage report on :'.green + ('file://' + path.resolve('./coverage/lcov-report/index.html')).yellow.underline);
+    });
+});
+
+gulp.task('test', ['pre-test', 'test:mocha', 'remap-istanbul']);
 
 gulp.task('clean:all', function () {
   return gulp.src('build', {
@@ -89,7 +109,7 @@ gulp.task('clean:all', function () {
     .pipe(clean());
 });
 
-gulp.task('build', function(){
+gulp.task('build', function () {
   return gulp.src(files.source)
     .pipe(babel({
       presets: ['es2015']

@@ -91,6 +91,7 @@ gulp.task('remap-istanbul', ['test:mocha'], function (cb) {
   reports.push(writeReport(collector, 'text-summary'));
   reports.push(writeReport(collector, 'json', 'coverage/coverage-final-mapped.json'));
   reports.push(writeReport(collector, 'html', 'coverage/lcov-report'));
+  reports.push(writeReport(collector, 'lcovonly', 'coverage/lcov.info'));
   Promise.all(reports).then(function () {
     console.log('Full coverage report on :'.green + ('file://' + path.resolve('./coverage/lcov-report/index.html')).yellow.underline);
     cb();
